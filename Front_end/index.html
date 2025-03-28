@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expence Tracker</title>
+</head>
+<body>
+    <h1>Expence tracker</h1>
+    <div id="signup">
+        <h2>Register</h2>
+        <form action="" id="register-form">
+            <label for="name">Name</label>
+            <input type="text" id="name" placeholder="Full Name" required>
+            <label for="user_id">User_id</label>
+            <input type="text" id="user_id" placeholder="User ID" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Email" required>
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Register</button>
+            <h3>Already have an account? <span id="showLogin" style="cursor: pointer; color: blue;">Click to Login</span></h3>
+        </form>
+
+    </div>
+    <h2>Login</h2>
+    <form id="login-form">
+        <label for="login-user_id">User_id</label>
+        <input type="text" id="login-user_id" placeholder="User ID" required>
+        <label for="login-password">password</label>
+        <input type="password" id="login-password" placeholder="Password" required>
+        <button type="submit">Login</button>
+        <h3>Don't have an account? <span id="showSignup" style="cursor: pointer; color: blue;">Click to Signup</span></h3>
+    </form>
+</div>
+<script src="script.js"></script>
+    
+</body>
+</html>
