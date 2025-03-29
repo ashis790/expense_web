@@ -47,7 +47,7 @@ const createOrder = async(req , res )=>{
                     "Content-Type": "application/json",
                     "x-client-id": process.env.CASHFREE_CLIENT_ID,
                     "x-client-secret": process.env.CASHFREE_SECRET_KEY,
-                    "x-api-version": "2022-09-01"
+                    "x-api-version": "2025-01-01"
                 }
 
             }
