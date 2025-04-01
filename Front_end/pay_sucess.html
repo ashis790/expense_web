@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>thanks to buy membarship welcome to our faimly</h1>
+    <button id="home-btn">Home</button>
+    <script>
+        document.getElementById("home-btn").addEventListener("click", function () {
+            window.location.href = "index.html"
+        })
+        async function updatePremiumMembership() {
+            try {
+                const token = localStorage.getItem("token"); // Ensure token is stored properly
+
+                if (!token) {
+                    console.error("No auth token found!");
+                    alert("Login again to update membership.");
+                    return;
+                }
+
+                const response = await fetch("http://localhost:3000/orders/updatePremium", {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": `Bearer ${token}`
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Failed to update premium: ${response.status}`);
+                }
+
+                alert("You are now a premium member!");
+                window.location.href = "index.html"; // Redirect to dashboard or home page
+            } catch (error) {
+                console.error("Error updating premium membership:", error);
+                alert("Payment successful, but failed to update membership. Contact support.");
+            }
+        }
+
+        // Call function when page loads
+        updatePremiumMembership();
+    </script>
+</body>
+</html>

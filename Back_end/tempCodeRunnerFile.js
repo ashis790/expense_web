@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 const port = 3000
 
 
+const orderRoutes = require('./routes/orders')
 const userRoutes = require('./routes/userRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
 
@@ -13,6 +14,7 @@ const expenseRoutes = require('./routes/expenseRoutes')
 app.use(cors())
 app.use(bodyParser.json()) 
 
+app.use('/orders', orderRoutes)
 app.use('/api/users', userRoutes)
 app.use('/api/expenses', expenseRoutes)
 

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button id="c">test</button>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('c');
+    
+            btn.addEventListener('click', async (e) => {
+                e.preventDefault();
+    
+                const token = localStorage.getItem('token');  // Ensure token is available
+                if (!token) {
+                    alert("Please log in again.");
+                    return;
+                }
+    
+                try {
+                    const updateResponse = await fetch("http://localhost:3000/orders/updatePremium", {
+                        method: "PUT",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        }
+                    });
+    
+                    const data = await updateResponse.json();
+                    console.log(data);
+                    alert(data.message);  // Show user feedback
+    
+                } catch (err) {
+                    console.log("Error updating premium status:", err);
+                    alert("Error updating premium status.");
+                }
+            });
+        });
+    </script>
+</body>
+</html>

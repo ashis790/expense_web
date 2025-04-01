@@ -23,6 +23,13 @@
     <h2>Expenses</h2>
     <ul id="expense-list"></ul>
     <button id="buy_premium" style="position: fixed; top: 20px; right: 20px;">Buy premium membor ship</button>
+    
+    <script src="https://sdk.cashfree.com/js/v3/cashfree.js"></script>
+    <script>
+        const cashfree = Cashfree({
+            mode: "sandbox"
+        });
+    </script>
     <script src="expense.js"></script>
 </body>
 </html>

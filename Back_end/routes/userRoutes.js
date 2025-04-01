@@ -27,7 +27,7 @@ router.post('/register', async (req, res) => {
 
 router.post('/login', async (req, res) => {
     const { user_id, password } = req.body
-    console.log(user_id,password)
+
     try {
         const user = await User.findOne({ where: { user_id } })
         if (!user) {
@@ -50,6 +50,36 @@ router.post('/login', async (req, res) => {
     } catch (err) {
         console.error(err)
         res.status(500).json({ message: 'Error logging in user' })
+    }
+})
+
+const decodeToken = (token) =>{
+    try{
+
+        const secretKey = "@ambe7914"
+        const decoded = jwt.verify(token, secretKey)
+        console.log("Decoded Token:", decoded)
+        return decoded.userId
+
+    }catch(err){
+        console.error("Invalid Token:", err)
+        return null
+    }
+
+}
+router.get('/cheak_premium',async(req,res)=>{
+    const token = req.headers.authorization?.split(' ')[1]
+    const id = decodeToken(token)
+    try{
+        const user = await User.findOne({ where: { id } })
+        
+        if (!user) {
+            return res.status(404).json({ error: "User not found", isPremiumMember: false });
+        }
+        console.log(`thiss is cheaking ////////[pskdjjhsduhdgsgfsygfy]`,user,user.ispremiummember)
+        return res.json({ isPremiumMember: user.ispremiummember })
+    }catch(err){
+        console.log(err)
     }
 })
 

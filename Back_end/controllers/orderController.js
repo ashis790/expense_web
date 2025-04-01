@@ -2,6 +2,8 @@ const Order  = require('../models/order')
 const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 const axios = require("axios")
+const {Cashfree} = require('cashfree-pg')
+const router = require('../routes/orders')
 require("dotenv").config()
 
 const decodeToken = (token) =>{
@@ -31,13 +33,14 @@ const createOrder = async(req , res )=>{
         const orderId = "order_" + Date.now()
         const orderData = {
             order_id: orderId,
-            order_amount: 1.00,
+           "order_amount": 1.00,
+            "order_currency": "INR",
             customer_details: {
                 customer_id: userId.toString(),
                 customer_phone: "9876543210" 
             },
             order_meta: {
-                return_url: `http://localhost:5500/payment-success.html`
+                return_url: `http://localhost:5501/Front_end/pay_sucess.html`
             }
         }
         const cashfreeResponse = await axios.post(
@@ -70,4 +73,26 @@ const createOrder = async(req , res )=>{
         return res.status(500).json({ message: 'Error creating order' })
     }
 }
-module.exports = createOrder
+const updateResponse = (async(req,res)=>{
+    const token = req.headers.authorization?.split(' ')[1]
+
+    const userId = decodeToken(token)
+    if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+    }
+    console.log('this is the cheack from user table update ', userId)
+    try{
+        const user = await User.findOne({where:{id:userId}})
+        if (!user) {
+            return res.status(404).json({ message: "User not found" });
+        }
+        user.ispremiummember= true
+        console.log(user.ispremiummember)
+        await user.save()
+        return res.status(200).json({ message: "User upgraded to premium" });
+
+    }catch(err){
+        console.log(err)
+    }
+})
+module.exports = {createOrder,updateResponse}
